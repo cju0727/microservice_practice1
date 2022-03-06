@@ -1,7 +1,40 @@
+import React, {useState, useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import axios from "axios";
 
 function App() {
+
+  useEffect(() => {
+    axios.get('/api/values')
+      .then(response => {
+        console.log('response', response.data)
+        setLists(response.data)
+      })
+  }, [])
+
+  const [lists, setLists] = useState([])
+  const [values, setValue] = useState("")
+
+  const changeHandler = (event) => {
+    setValue(event.currentTarget.value)
+  }
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+
+    axios.post('/api/value', { value: value })
+      .then(response => {
+        if(response.data.success) {
+           console.log('response', response)
+           setLists([...lists, response.data])
+           setValue("");
+        } else {
+          alert("값을 DB에 넣는데 실패했습니다.")
+        }
+      }
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -9,10 +42,18 @@ function App() {
         
 
     <div className="container">
-      <form className="example" onSubmit>
+
+      {lists && lists.map((list, index) => {
+        <li key={index}>{list.value}</li>
+      })}
+
+
+      <form className="example" onSubmit={submitHandler}>
         <input
           type="text"
           placeholder="입력해주세요..."
+          onChange={changeHandler}
+          value={value}
           />
           <button type="submit">확인</button>
       </form>
