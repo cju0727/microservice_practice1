@@ -1,6 +1,7 @@
+### builder
 FROM node:alpine as builder
 
-WORKDIR app
+WORKDIR /app
 
 COPY package.json ./
 
@@ -11,6 +12,7 @@ COPY ./ ./
 RUN npm run builder
 
 
+### nginx
 FROM nginx
 
 EXPOSE 3000

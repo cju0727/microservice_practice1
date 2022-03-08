@@ -9,11 +9,11 @@ const app = express();
 
 app.use(bodyParser.json());
 
-db.pool.query('CREATE TABLE lists (
+db.pool.query(`CREATE TABLE lists (
     id INTEGER AUTO_INCREMENT,
-    value Text,
+    value TEXT,
     PRIMARY KEY (id)
-)', (err, results, fields) => {
+)`, (err, results, fields) => {
     console.log('results', results)
 })
 
@@ -27,9 +27,9 @@ app.get('/api/values', function(req, res) {
     })
 })
 
-app.post('/api/values', function(req, res, next) {
-    db.pool.query('INSERT INTO lists (value) VALUES("${req.body.value}")',
-        (err. results, fields) => {
+app.post('/api/value', function(req, res, next) {
+    db.pool.query(`INSERT INTO lists (value) VALUES("${req.body.value}")`,
+        (err, results, fields) => {
             if(err)
                 return res.status(500).send(err)
             else
