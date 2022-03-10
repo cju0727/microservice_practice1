@@ -1,7 +1,7 @@
 ### builder
 FROM node:alpine as builder
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
 COPY package.json ./
 

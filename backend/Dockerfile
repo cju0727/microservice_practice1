@@ -1,10 +1,6 @@
 FROM node:alpine
 
-RUN mkdir -p /app/node_modules/.cache/.eslintcache
-
-RUN chmod -R 777 /app
-
-WORKDIR /app
+WORKDIR /usr/src/app
 
 COPY ./package.json ./
 
